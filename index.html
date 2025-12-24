@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Merry Christmas 🎄</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Cursive font -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #ffd6d6, #8b0000);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        /* ===== TOP NAV BAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: flex-end;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(6px);
+        }
+
+        .navbar select {
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        /* ===== BACKGROUND CURSIVE TEXT ===== */
+        .background-text {
+            position: absolute;
+            top: calc(50% - 180px);
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(4rem, 10vw, 8rem);
+            white-space: nowrap;
+            z-index: 1;
+            text-align: center;
+
+            background: linear-gradient(
+                120deg,
+                #b8860b,
+                #ffd700,
+                #fff4b0,
+                #ffd700,
+                #b8860b
+            );
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+
+            mask-image: linear-gradient(to right, black 0%, black 50%, transparent 50%);
+            mask-size: 200% 100%;
+            mask-position: 100% 0;
+            animation: write 4s ease forwards, shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes write {
+            to { mask-position: 0 0; }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ===== SNOW ===== */
+        .snow {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: white;
+            opacity: 0.9;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh); }
+        }
+
+        /* ===== CARD ===== */
+        .card-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            z-index: 3;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            width: 620px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.35);
+            border: 1px solid rgba(255,255,255,0.25);
+        }
+
+        .card-content {
+            max-height: 100px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 10px;
+        }
+
+        .card p {
+            font-size: 1.25rem;
+            color: white;
+            line-height: 1.6;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
+        }
+
+        footer {
+            margin-top: 18px;
+            font-size: 0.9rem;
+            opacity: 0.85;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        .card-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .card-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 215, 0, 0.6);
+            border-radius: 10px;
+        }
+
+        /* ===== SNOWMAN ===== */
+        #snowman {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            font-size: 6rem;
+            z-index: 5;
+            animation: bob 3s ease-in-out infinite;
+        }
+
+        @keyframes bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        #snowSpeech {
+            position: absolute;
+            bottom: 120px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px 12px;
+            border-radius: 12px;
+            font-size: 2rem;
+            color: #5a0000;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+        }
+
+        /* ===== SNOWY HILLS (LAYERED & ROUNDED) ===== */
+        @keyframes hill-drift {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(-15px); }
+            100% { transform: translateX(0); }
+        }
+
+        .snow-hills {
+            animation: hill-drift 30s ease-in-out infinite;
+            position: fixed;
+            bottom: 0;
+            left: -10%;
+            width: 120%;
+            height: 220px;
+            background: #ffffff;
+            border-radius: 50% 50% 0 0;
+            z-index: 3;
+        }
+
+        /* Mid hill */
+        .snow-hills::before {
+            content: "";
+            position: absolute;
+            bottom: 40px;
+            left: -5%;
+            width: 110%;
+            height: 160px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50% 50% 0 0;
+        }
+
+        /* Far hill */
+        .snow-hills::after {
+            content: "";
+            position: absolute;
+            bottom: 90px;
+            left: -15%;
+            width: 130%;
+            height: 130px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50% 50% 0 0;
+        }
+
+        .snow-sparkle {
+            position: fixed;
+            bottom: 120px;
+            width: 3px;
+            height: 3px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            animation: sparkle 3s infinite ease-in-out;
+            z-index: 4;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        .footprints {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            opacity: 0.4;
+            z-index: 4;
+        }
+
+        .footprints span {
+            width: 8px;
+            height: 12px;
+            background: rgba(200,200,200,0.6);
+            border-radius: 50%;
+        }
+
+    </style>
+</head>
+   
+<body>
+
+    <!-- NAV -->
+    <div class="navbar">
+        <select id="languageSelect">
+            <option value="en">English 🇬🇧</option>
+            <option value="af">Afrikaans 🇿🇦</option>
+            <option value="ko">한국어 🇰🇷</option>
+        </select>
+    </div>
+
+    <!-- Background -->
+    <div class="background-text" id="titleText"></div>
+
+    <!-- Snow -->
+    <div class="snow" id="snow"></div>
+
+    <!-- Card -->
+    <div class="card-wrapper">
+        <div class="card">
+            <div class="card-content">
+                <p id="messageText"></p>
+                <footer id="footerText"></footer>
+            </div>
+        </div>
+
+        <a id="atag"
+           href="https://docs.google.com/forms/d/e/1FAIpQLSciFtE911pua5IcvBS4xca9MsowDflHVbM4xStvamfn1qj-4g/viewform?usp=publish-editor"
+           target="_blank"
+           style="
+                padding: 10px 20px;
+                border-radius: 30px;
+                background: linear-gradient(to right, #ffd700, #b8860b);
+                color: #5a0000;
+                font-weight: bold;
+                text-decoration: none;
+           ">
+        </a>
+    </div>
+
+    <!-- Snowy hills -->
+    <div class="snow-hills"></div>
+
+    <!-- Snowman -->
+    <div id="snowman">
+        ⛄
+        <div id="snowSpeech"></div>
+    </div>
+    <div class="footprints">
+        <span></span><span></span><span></span><span></span>
+    </div>
+
+
+<script>
+    const content = {
+        en: {
+            title: "Merry Christmas",
+            message: "This Christmas, may your heart be light, your home be warm, and your days be filled with kindness and joy. May the season remind you of the beauty in small moments, the comfort of loved ones, and the hope a new year brings. Wherever you are and whatever this year has held for you, may peace find you and may happiness gently follow.",
+            footer: "❄️ Enjoy the holidays ❄️",
+            atag: "⭐ Rate this Christmas Card",
+            idle: "Still here? 😊",
+            reward: "You read it all! Thank you 🎉"
+        },
+        af: {
+            title: "Geseënde Kersfees",
+            message: "Mag hierdie Kersfees jou hart lig maak, jou huis met warmte vul en jou dae met vreugde en vriendelikheid seën. Mag die feestyd jou herinner aan die skoonheid van klein oomblikke, die troos van geliefdes en die hoop wat ’n nuwe jaar bring. Waar jy ook al is en wat hierdie jaar ook al gebring het, mag vrede jou vind en geluk jou vergesel.",
+            footer: "❄️ Geniet die feestyd ❄️",
+            atag: "⭐ Rate hierdie Kerskaart",
+            idle: "Nog hier? 😊",
+            reward: "Jy het alles gelees! Dankie 🎉"
+        },
+        ko: {
+            title: "메리 크리스마스",
+            message: "이 크리스마스에 마음은 가볍고 집은 따뜻하며 하루하루가 친절과 기쁨으로 채워지길 바랍니다. 이 계절이 작은 순간들의 소중함과 사랑하는 사람들의 위로, 그리고 새해가 주는 희망을 떠올리게 해주길 바랍니다. 어디에 있든, 어떤 한 해를 보냈든 평화가 당신을 찾아오고 행복이 조용히 함께하길 바랍니다.",
+            footer: "❄️ 즐거운 연말 보내세요 ❄️",
+            atag: "⭐ 이 크리스마스 카드를 평가해 주세요",
+            idle: "아직 여기 있나요? 😊",
+            reward: "끝까지 읽어주셔서 감사합니다 🎉"
+        }
+    };
+
+    const select = document.getElementById("languageSelect");
+    const savedLang = localStorage.getItem("lang") || "en";
+    select.value = savedLang;
+
+    function applyLanguage(lang) {
+        document.getElementById("titleText").textContent = content[lang].title;
+        document.getElementById("messageText").innerHTML = content[lang].message;
+        document.getElementById("footerText").textContent = content[lang].footer;
+        document.getElementById("atag").textContent = content[lang].atag;
+    }
+
+    applyLanguage(savedLang);
+
+    select.addEventListener("change", () => {
+        localStorage.setItem("lang", select.value);
+        location.reload();
+    });
+
+    /* Snow */
+    const snow = document.getElementById("snow");
+    for (let i = 0; i < 60; i++) {
+        const flake = document.createElement("div");
+        flake.className = "snowflake";
+        flake.textContent = "❄";
+        flake.style.left = Math.random() * 100 + "vw";
+        flake.style.fontSize = Math.random() * 12 + 10 + "px";
+        flake.style.animationDuration = Math.random() * 6 + 6 + "s";
+        flake.style.animationDelay = Math.random() * 5 + "s";
+        snow.appendChild(flake);
+    }
+
+    /* Snowman logic */
+    const speech = document.getElementById("snowSpeech");
+    const cardContent = document.querySelector(".card-content");
+    let idle = 0, idleShown = false, rewardShown = false;
+
+    setInterval(() => {
+        idle++;
+        if (idle === 12 && !idleShown) {
+            speech.textContent = content[savedLang].idle;
+            speech.style.opacity = 1;
+            idleShown = true;
+        }
+    }, 1000);
+
+    ["mousemove","keydown","click","scroll"].forEach(e =>
+        window.addEventListener(e, () => {
+            idle = 0;
+            if (!rewardShown) speech.style.opacity = 0;
+        })
+    );
+
+    cardContent.addEventListener("scroll", () => {
+        if (
+            cardContent.scrollTop + cardContent.clientHeight >=
+            cardContent.scrollHeight - 5 && !rewardShown
+        ) {
+            speech.textContent = content[savedLang].reward;
+            speech.style.opacity = 1;
+            rewardShown = true;
+        }
+    });
+</script>
+    <div class="snow-sparkle" style="left: 20%; animation-delay: 0s;"></div>
+    <div class="snow-sparkle" style="left: 45%; animation-delay: 1s;"></div>
+    <div class="snow-sparkle" style="left: 70%; animation-delay: 2s;"></div>
+</body>
+</html>
